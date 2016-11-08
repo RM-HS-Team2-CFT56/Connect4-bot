@@ -2,14 +2,17 @@ package se.sigmatechnology.connect4.bot;
 
 public class Main {
 
-    public static void main(String[] args) {
+
+    GameClient gameClient;
+
+    public static void main(String[] args) throws InterruptedException {
         GameClient gameClient = new GameClient();
         Board board = new Board();
         if (gameClient.connect("BOT")) {
-            String state = gameClient.getState();
-            while (!state.equals("WON") ||
-                    !state.equals("LOST")) {
-                if (state.equals("TURN")) {
+            State state = gameClient.getState();
+            while (state != State.WON && state != State.LOST) {
+                System.out.println(state);
+                if (state == state.YOUR_TURN) {
                     int opponentTurn = gameClient.getLastTurn();
                     if (opponentTurn > 0) {
                         board.opponentsDisc(opponentTurn);
@@ -18,10 +21,11 @@ public class Main {
                     board.putDisc(column);
                     gameClient.enterDisk(column);
                 } else if (state.equals("WAIT")) {
+                    Thread.sleep(1000);
                     continue;
                 }
             }
-            System.out.println(state);
+
 
         }
 

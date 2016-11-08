@@ -12,8 +12,8 @@ public class GameClient {
         return false; //TODO: implement me
     }
 
-    public String getState() {
-        return ""; //TODO: implement me
+    public State getState() {
+        return State.LOST; //TODO: implement me
     }
 
     public String enterDisk(int column) {
