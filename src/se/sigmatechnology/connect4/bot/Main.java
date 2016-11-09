@@ -8,6 +8,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         GameClient gameClient = new GameClient();
         Board board = new Board();
+        AI ai = new AI(); 
+        
         if (gameClient.connect("BOT")) {
             State state = gameClient.getState();
             while (state != State.WON && state != State.LOST) {
@@ -17,7 +19,7 @@ public class Main {
                     if (opponentTurn > 0) {
                         board.opponentsDisc(opponentTurn);
                     }
-                    int column = AI.getNextTurn(board);
+                    int column = ai.getNextTurn(board);
                     board.putDisc(column);
                     gameClient.enterDisk(column);
                 } else if (state.equals("WAIT")) {
