@@ -5,7 +5,7 @@ public class Main {
 
     GameClient gameClient;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         GameClient gameClient = new GameClient();
         Board board = new Board();
         if (gameClient.connect("BOT")) {

@@ -9,7 +9,27 @@ public class GameClient {
 
 
     public boolean connect(String name) {
-        return false; //TODO: implement me
+    	 System.out.println("Enter IP address of server");
+      	  
+         Scanner scanner = new Scanner(System.in);
+    	    String IPaddress = scanner.nextLine();
+    	    
+    	    String request = "http://"+IPaddress +"/connect/?";
+    	 
+    	    HttpClient client = new HttpClient();
+         PostMethod method = new PostMethod(request);
+    	  
+         method.addParameter("name",name);
+       
+         int statusCode = client.executeMethod(method);
+         
+         scanner.close();
+        
+         if (statusCode == HttpStatus.SC_OK) {
+        	     return true;
+         }
+       	
+     	    return false; 
     }
 
     public State getState() {
