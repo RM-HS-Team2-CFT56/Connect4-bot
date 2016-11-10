@@ -52,6 +52,8 @@ public class Main {
         LOG.info("Application started");
         GameClient gameClient = new GameClient(cmd.getOptionValue("url"));
         Board board = new Board();
+        AI ai = new AI(); 
+        
         if (gameClient.connect("BOT")) {
             LOG.info("Connection succesfull");
             State state = gameClient.getState();
@@ -62,7 +64,7 @@ public class Main {
                     if (opponentTurn > 0) {
                         board.opponentsDisc(opponentTurn);
                     }
-                    int column = AI.getNextTurn(board);
+                    int column = ai.getNextTurn(board);
                     board.putDisc(column);
                     gameClient.enterDisk(column);
                 } else if (state == State.WAITING_FOR_PLAYER || state == State.OPPONENTS_TURN) {
