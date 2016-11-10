@@ -1,8 +1,13 @@
 package se.sigmatechnology.connect4.bot;
 
-import org.springframework.context.annotation.Bean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
+import se.sigmatechnology.connect4.bot.model.ConnectResponse;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by msk on 2016-11-08.
@@ -10,30 +15,34 @@ import java.util.List;
 
 public class GameClient {
 
+    private final static Logger LOG = LoggerFactory.getLogger(GameClient.class);
+    private static final String CONNECT_PATH = "/connect2Server"; // FIXME: 2016-11-10 temporary path, should be "/connect"
+    private String url;
 
+    public GameClient(String urlToConnect) {
+        url = "http://" + urlToConnect;
+    }
 
     public boolean connect(String name) {
-//    	 System.out.println("Enter IP address of server");
-//
-//         Scanner scanner = new Scanner(System.in);
-//    	    String IPaddress = scanner.nextLine();
-//
-//    	    String request = "http://"+IPaddress +"/connect/?";
-//
-//    	    HttpClient client = new HttpClient();
-//         PostMethod method = new PostMethod(request);
-//
-//         method.addParameter("name",name);
-//
-//         int statusCode = client.executeMethod(method);
-//
-//         scanner.close();
-//
-//         if (statusCode == HttpStatus.SC_OK) {
-//        	     return true;
-//         }
+        LOG.info("Trying to connect to game server {}", url);
 
-        return false;
+        RestTemplate template = new RestTemplate();
+
+        Map<String, String> request = new HashMap<String, String>();
+        request.put("name", name);
+
+        ConnectResponse response = template.postForObject(url + CONNECT_PATH, request, ConnectResponse.class);
+
+        LOG.info(response.toString());
+
+        if (response.getId() == 0) {
+            LOG.info(response.getContent());
+            return false;
+        } else {
+            LOG.info("I'm player {}", response.getId());
+            return true;
+        }
+
     }
 
     public State getState() {
