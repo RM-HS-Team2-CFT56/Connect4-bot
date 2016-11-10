@@ -39,6 +39,22 @@ public class Board {
 			}
 		}
     }
+    
+    public Board(int column, int row) {
+    	board_column = column;
+    	board_row = row;
+   	 
+    	board = new type [board_column][board_row];
+    	
+        //Initialize all the entire board places with zero value.
+    	for(int y = 0; y < board_row; y++)
+		{
+			for(int x = 0; x < board_column; x++)
+			{
+				board[x][y] = type.EMPTY;
+			}
+		}
+    }
    
     //Put own disc to specific column of board
     public void putDisc(int column ){
@@ -68,6 +84,20 @@ public class Board {
 		}
         
     }
+    
+   
+    //Getters
+  	public int GetColumn()
+  	{
+  		return board_column;
+  	}
+  	
+  	
+	public int GetRow()
+  	{
+  		return board_row;
+  	} 	
+	
     
     public type[][] getBoard() {
     	return board;
