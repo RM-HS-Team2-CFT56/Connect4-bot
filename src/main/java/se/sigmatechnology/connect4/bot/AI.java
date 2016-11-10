@@ -7,12 +7,23 @@ import java.lang.Math;
  */
 public class AI {
 	
+	int AISelection;
+	
 	public AI(){
-		
+		AISelection = 0;
+	}
+	public AI(int ai) {
+		AISelection = ai;
 	}
 
     public int getNextTurn(Board board) {
-    	return randomSolution(board);
+    	switch(AISelection) {
+    	case 1:
+    		return randomSolution(board);
+    	default:
+    		return -1;
+    	}
+    	
     }
     
     private int randomSolution(Board board) {
@@ -32,9 +43,9 @@ public class AI {
     
     private boolean checkColumn(Board board, int column) {
     	for(int i = 0; i < 6; i++) {
-    		/*if(board[column][i] == Board.Type.EMPTY) {
+    		if(board.getBoard()[column][i] == Board.type.EMPTY) {
     			return true;
-    		}*/
+    		}
     	}
 		return false;
     }

@@ -74,5 +74,9 @@ public class Board {
 		}
         
     }
+    
+    public type[][] getBoard() {
+    	return board;
+    }
 
 }
