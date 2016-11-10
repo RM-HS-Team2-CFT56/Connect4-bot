@@ -32,21 +32,20 @@ public class Board {
     
     public Board() {
     	 
-//    	board = new type [6][7];
-//
-//        //Intiallise all the entire board places with zero value.
-//    	for(int y = 0; y < board_row; y++)
-//		{
-//			for(int x = 0; x < board_column; x++)
-//			{
-//				board[x][y] = type.EMPTY;
-//			}
-//		}
+    	board = new type [board_column][board_row];
+    	
+        //Initialize all the entire board places with zero value.
+    	for(int y = 0; y < board_row; y++)
+		{
+			for(int x = 0; x < board_column; x++)
+			{
+				board[x][y] = type.EMPTY;
+			}
+		}
     }
-    
-    
-    @RequestMapping(value = " /game/{Column}", method=RequestMethod.POST)
-    public void putDisc(@PathVariable int column ){
+   
+    //Put own disc to specific column of board
+    public void putDisc(int column ){
     	
     	for(int y = 0; y < board_row; y++)
 		{
@@ -59,10 +58,9 @@ public class Board {
 		}
     	   	
     }
-   
-    
-    @RequestMapping(value = " /game/{Column}", method=RequestMethod.POST)
-    public void opponentsDisc(@PathVariable int column){
+           
+   //Put opponent disc to specific column of board
+    public void opponentsDisc(int column){
     	for(int y = 0; y < board_row; y++)
 		{
     		if(board[column][y] == type.EMPTY){ 	
