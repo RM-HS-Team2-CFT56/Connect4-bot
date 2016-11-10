@@ -1,7 +1,10 @@
 package se.sigmatechnology.connect4.bot;
 
+import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import se.sigmatechnology.connect4.bot.model.ConnectResponse;
 import se.sigmatechnology.connect4.bot.model.StateResponse;
@@ -13,7 +16,7 @@ import java.util.Map;
 /**
  * Created by msk on 2016-11-08.
  */
-
+@Component
 public class GameClient {
 
     private final static Logger LOG = LoggerFactory.getLogger(GameClient.class);
@@ -21,14 +24,15 @@ public class GameClient {
     private static final String GAMESTATE_PATH = "/game";
     private String url;
 
-    public GameClient(String urlToConnect) {
-        url = "http://" + urlToConnect;
+    private RestTemplate template = new RestTemplate();
+
+    @Autowired
+    public GameClient(CommandLine commandLine) {
+        url = "http://" + commandLine.getOptionValue("url");
     }
 
     public boolean connect(String name) {
         LOG.info("Trying to connect to game server {}", url);
-
-        RestTemplate template = new RestTemplate();
 
         Map<String, String> request = new HashMap<String, String>();
         request.put("name", name);
@@ -48,17 +52,17 @@ public class GameClient {
     }
 
     public State getState() {
-    	
-    	LOG.info("Trying to get game state");
 
-        RestTemplate template = new RestTemplate();
-        
+        LOG.info("Trying to get game state");
+
+//        RestTemplate template = new RestTemplate();
+
         StateResponse response = template.postForObject(url + GAMESTATE_PATH, null, StateResponse.class);
-        
+
         LOG.info(response.toString());
-        
+
         return response.getState();
-        
+
     }
 
     public String enterDisk(int column) {

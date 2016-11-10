@@ -10,12 +10,17 @@ import org.springframework.context.annotation.Configuration;
  * Created by msk on 2016-11-10.
  */
 @Configuration
-public class OptionParser {
+public class CommandLineFactory {
 
-    private final static Logger LOG = LoggerFactory.getLogger(OptionParser.class);
+    private final static Logger LOG = LoggerFactory.getLogger(CommandLineFactory.class);
+
+    private CommandLine commandLine;
 
     @Bean
     public CommandLine parseOptions() {
+        if (commandLine != null) {
+            return commandLine;
+        }
         String[] args = System.getProperty("sun.java.command").split(" ");
         Options options = new Options();
         //Common options
@@ -32,6 +37,10 @@ public class OptionParser {
         optionGroup.addOption(
                 Option.builder("randomAI")
                         .desc("AI that randomly selects column")
+                        .build());
+        optionGroup.addOption(
+                Option.builder("sequentialFillAI")
+                        .desc("AI that sequentially fills every column from 1st to 7th, and then starts from begining")
                         .build());
         options.addOptionGroup(optionGroup);
         CommandLineParser parser = new DefaultParser();

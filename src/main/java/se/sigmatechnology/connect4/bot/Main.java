@@ -20,19 +20,23 @@ public class Main implements CommandLineRunner {
     private AI ai;
     @Autowired
     private CommandLine cmd;
+    @Autowired
+    private GameClient gameClient;
+
+    @Autowired
+    private Board board;
 
     public static void main(String... args) throws Exception {
         SpringApplication.run(Main.class, args);
     }
 
-    public void gameLogic() throws Exception {
+    public void run(String... strings) throws Exception {
         if (cmd == null) {
             return;
         }
         LOG.info("Application started");
-        LOG.info("AI initialized with {}", ai);
-        GameClient gameClient = new GameClient(cmd.getOptionValue("url"));
-        Board board = new Board();
+        LOG.info("{};{};{};{}", ai, cmd, gameClient, board);
+
         if (gameClient.connect("BOT")) {
             LOG.info("Connection successful");
             State state = gameClient.getState();
@@ -57,11 +61,5 @@ public class Main implements CommandLineRunner {
         } else {
             LOG.error("Connection failed");
         }
-    }
-
-
-    @Override
-    public void run(String... strings) throws Exception {
-        gameLogic();
     }
 }
