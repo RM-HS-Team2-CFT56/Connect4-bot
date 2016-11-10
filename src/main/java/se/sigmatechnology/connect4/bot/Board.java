@@ -1,9 +1,5 @@
 package se.sigmatechnology.connect4.bot;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 /**
  * Created by msk and bek on 2016-11-08.
  */
