@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 import se.sigmatechnology.connect4.bot.model.ConnectResponse;
+import se.sigmatechnology.connect4.bot.model.StateResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ public class GameClient {
 
     private final static Logger LOG = LoggerFactory.getLogger(GameClient.class);
     private static final String CONNECT_PATH = "/connect2Server"; // FIXME: 2016-11-10 temporary path, should be "/connect"
+    private static final String GAMESTATE_PATH = "/game";
     private String url;
 
     public GameClient(String urlToConnect) {
@@ -46,7 +48,17 @@ public class GameClient {
     }
 
     public State getState() {
-        return State.LOST; //TODO: implement me
+    	
+    	LOG.info("Trying to get game state");
+
+        RestTemplate template = new RestTemplate();
+        
+        StateResponse response = template.postForObject(url + GAMESTATE_PATH, null, StateResponse.class);
+        
+        LOG.info(response.toString());
+        
+        return response.getState();
+        
     }
 
     public String enterDisk(int column) {
