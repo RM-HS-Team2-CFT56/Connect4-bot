@@ -11,7 +11,6 @@
     </parent>
 
     <properties>
-        <!-- The main class to start by executing java -jar -->
         <start-class>se.sigmatechnology.connect4.bot.Main</start-class>
     </properties>
 

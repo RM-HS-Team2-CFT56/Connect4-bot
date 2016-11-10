@@ -4,6 +4,8 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import se.sigmatechnology.connect4.bot.ai.AI;
+import se.sigmatechnology.connect4.bot.ai.AIFactory;
 
 @SpringBootApplication
 public class Main {
@@ -51,9 +53,9 @@ public class Main {
         }
         LOG.info("Application started");
         GameClient gameClient = new GameClient(cmd.getOptionValue("url"));
+        AI ai = AIFactory.buildAI(cmd);
+
         Board board = new Board();
-        AI ai = new AI(); 
-        
         if (gameClient.connect("BOT")) {
             LOG.info("Connection succesfull");
             State state = gameClient.getState();

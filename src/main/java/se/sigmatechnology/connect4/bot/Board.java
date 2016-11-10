@@ -32,16 +32,16 @@ public class Board {
     
     public Board() {
     	 
-    	board = new type [6][7];
-    	
-        //Intiallise all the entire board places with zero value.
-    	for(int y = 0; y < board_row; y++)
-		{
-			for(int x = 0; x < board_column; x++)
-			{
-				board[x][y] = type.EMPTY;
-			}
-		}
+//    	board = new type [6][7];
+//
+//        //Intiallise all the entire board places with zero value.
+//    	for(int y = 0; y < board_row; y++)
+//		{
+//			for(int x = 0; x < board_column; x++)
+//			{
+//				board[x][y] = type.EMPTY;
+//			}
+//		}
     }
     
     

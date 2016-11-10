@@ -35,8 +35,8 @@ public class GameClient {
 
         LOG.info(response.toString());
 
-        if (response.getId() == 0) {
-            LOG.info(response.getContent());
+        if (response.getId() == null) {
+            LOG.info(response.getMessage());
             return false;
         } else {
             LOG.info("I'm player {}", response.getId());

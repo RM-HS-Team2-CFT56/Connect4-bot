@@ -5,7 +5,7 @@ package se.sigmatechnology.connect4.bot.model;
  */
 public class ConnectResponse {
     private Integer id;
-    private String content;
+    private String message;
 
     public Integer getId() {
         return id;
@@ -15,19 +15,19 @@ public class ConnectResponse {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getMessage() {
+        return message;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
     public String toString() {
         return "ConnectResponse{" +
                 "id=" + id +
-                ", content='" + content + '\'' +
+                ", message='" + message + '\'' +
                 '}';
     }
 }
