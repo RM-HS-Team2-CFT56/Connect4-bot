@@ -1,7 +1,11 @@
 package se.sigmatechnology.connect4.bot;
 
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 /**
- * Created by msk on 2016-11-08.
+ * Created by msk and bek on 2016-11-08.
  */
 
 /**
@@ -17,18 +21,58 @@ package se.sigmatechnology.connect4.bot;
  */
 public class Board {
 
-    int [][] board;
+    private type [][] board;
+    
+    private int board_column = 7;
+    private int board_row =6;
+       
+    public enum type {
+        BLUE, RED, EMPTY
+    }
     
     public Board() {
-    	board = new int[6][7];
+    	 
+    	board = new type [6][7];
+    	
+        //Intiallise all the entire board places with zero value.
+    	for(int y = 0; y < board_row; y++)
+		{
+			for(int x = 0; x < board_column; x++)
+			{
+				board[x][y] = type.EMPTY;
+			}
+		}
     }
-
-    public void putDisc(int column){
-        //TODO: implement me
+    
+    
+    @RequestMapping(value = " /game/{Column}", method=RequestMethod.POST)
+    public void putDisc(@PathVariable int column ){
+    	
+    	for(int y = 0; y < board_row; y++)
+		{
+		    if(board[column][y] == type.EMPTY){ 	
+    		 
+		    	board[column][y] = type.BLUE;
+		    	break;
+		    }		    
+			
+		}
+    	   	
     }
-
-    public void opponentsDisc(int column){
-        //TODO: implement me
+   
+    
+    @RequestMapping(value = " /game/{Column}", method=RequestMethod.POST)
+    public void opponentsDisc(@PathVariable int column){
+    	for(int y = 0; y < board_row; y++)
+		{
+    		if(board[column][y] == type.EMPTY){ 	
+       		 
+		    	board[column][y] = type.RED;
+		    	break;
+		    }		
+			
+		}
+        
     }
 
 }
