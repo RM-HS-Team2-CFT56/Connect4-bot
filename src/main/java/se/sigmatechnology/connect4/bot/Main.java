@@ -1,63 +1,40 @@
 package se.sigmatechnology.connect4.bot;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import se.sigmatechnology.connect4.bot.ai.AI;
-import se.sigmatechnology.connect4.bot.ai.AIFactory;
 
-@SpringBootApplication
-public class Main {
+@SpringBootApplication(exclude = {EmbeddedServletContainerAutoConfiguration.class, WebMvcAutoConfiguration.class})
+public class Main implements CommandLineRunner {
 
     private final static Logger LOG = LoggerFactory.getLogger(Main.class);
 
+    @Autowired
+    private AI ai;
+    @Autowired
+    private CommandLine cmd;
 
-    private static CommandLine parseOptions(String[] args) {
-        Options options = new Options();
-        //Common options
-        options.addOption(
-                Option.builder("url")
-                        .desc("URL of game server")
-                        .hasArg()
-                        .required()
-                        .build());
-        options.addOption("help", "print this message");
-
-        //AI options
-        OptionGroup optionGroup = new OptionGroup();
-        optionGroup.addOption(
-                Option.builder("randomAI")
-                        .desc("AI that randomly selects column")
-                        .build());
-        options.addOptionGroup(optionGroup);
-        CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = null;
-        try {
-            cmd = parser.parse(options, args);
-        } catch (Exception e) {
-            LOG.error("Error parsing parameters");
-        }
-        if (cmd == null || cmd.hasOption("help")) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar <jar_name> <opts>", options);
-            return null;
-        }
-        return cmd;
+    public static void main(String... args) throws Exception {
+        SpringApplication.run(Main.class, args);
     }
 
-    public static void main(String[] args) throws Exception {
-        CommandLine cmd = parseOptions(args);
+    public void gameLogic() throws Exception {
         if (cmd == null) {
             return;
         }
         LOG.info("Application started");
+        LOG.info("AI initialized with {}", ai);
         GameClient gameClient = new GameClient(cmd.getOptionValue("url"));
-        AI ai = AIFactory.buildAI(cmd);
-
         Board board = new Board();
         if (gameClient.connect("BOT")) {
-            LOG.info("Connection succesfull");
+            LOG.info("Connection successful");
             State state = gameClient.getState();
             LOG.info("State: {}", state);
             while (state != State.WON && state != State.LOST) {
@@ -80,5 +57,11 @@ public class Main {
         } else {
             LOG.error("Connection failed");
         }
+    }
+
+
+    @Override
+    public void run(String... strings) throws Exception {
+        gameLogic();
     }
 }
