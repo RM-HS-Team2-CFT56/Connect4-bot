@@ -1,15 +1,13 @@
 package se.sigmatechnology.connect4.bot.model;
 
-import java.util.List;
-
 public class getNameResponse {
-	private List<String> playerName;
+	private String playerName;
 
-    public List<String> getPlayerName() {
+    public String getPlayerName() {
         return playerName;
     }
 
-    public void setPlayerName(List<String> playerName) {
+    public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
