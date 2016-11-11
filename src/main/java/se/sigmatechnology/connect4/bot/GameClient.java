@@ -23,7 +23,7 @@ public class GameClient {
     private static final String PLAYER_NAME = "/game/Player";
     private static final String LAST_TURN = "/game/Turn";
     private String url;
-    private int column;
+    
     private RestTemplate template = new RestTemplate();
 
     @Autowired
@@ -77,7 +77,7 @@ public class GameClient {
         LOG.info(response.toString());
 
         if (response.getMessage() == "OK") {
-            LOG.info("Enter Disk", response.getMessage()); //FIXME missing {} in log
+            LOG.info("Enter Disk {}", response.getMessage()); 
             return response.getMessage();
         } else {
 
@@ -89,7 +89,7 @@ public class GameClient {
     public String getName() {
 
         LOG.info("Get name of player");
-        getNameResponse response = template.getForObject(url + PLAYER_NAME, null, getNameResponse.class); //FIXME Class name should be CamelCase
+        GetNameResponse response = template.getForObject(url + PLAYER_NAME, null, GetNameResponse.class); 
 
         LOG.info(response.toString());
 
@@ -106,8 +106,7 @@ public class GameClient {
     public int getLastTurn() {
 
         LOG.info("Get name last Turn");
-        getLastTurnResponse response = template.getForObject(url + LAST_TURN, null, getLastTurnResponse.class);  //FIXME Class name should be CamelCase
-
+        GetLastTurnResponse response = template.getForObject(url + LAST_TURN, null, GetLastTurnResponse.class);  
         LOG.info(response.toString());
 
         if (response.getLastTurn() == null) {
