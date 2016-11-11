@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import se.sigmatechnology.connect4.bot.model.ConnectResponse;
+import se.sigmatechnology.connect4.bot.model.EnterDiskResponse;
 import se.sigmatechnology.connect4.bot.model.StateResponse;
+import se.sigmatechnology.connect4.bot.model.getLastTurnResponse;
+import se.sigmatechnology.connect4.bot.model.getNameResponse;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +22,14 @@ import java.util.Map;
  */
 @Component
 public class GameClient {
-
+    private String url;
+    private int column;
     private final static Logger LOG = LoggerFactory.getLogger(GameClient.class);
     private static final String CONNECT_PATH = "/connect2Server"; // FIXME: 2016-11-10 temporary path, should be "/connect"
     private static final String GAMESTATE_PATH = "/game";
-    private String url;
-
+    private static final String PLAYER_NAME = "/game/Player";
+    private static final String LAST_TURN = "/game/Turn";
+   
     private RestTemplate template = new RestTemplate();
 
     @Autowired
@@ -60,21 +66,68 @@ public class GameClient {
         StateResponse response = template.postForObject(url + GAMESTATE_PATH, null, StateResponse.class);
 
         LOG.info(response.toString());
-
-        return response.getState();
+        
+        if (response.getState() == null) {
+            LOG.info(response.getState().toString());
+            return response.getState();
+        } else {
+            LOG.info("Current game state {} ", response.getState());
+            return response.getState();
+        }
+   
 
     }
 
     public String enterDisk(int column) {
-        return "";//TODO: implement me
-    }
+    	    	  
+    	LOG.info("Insert disk at colomn {}", column);
+    	EnterDiskResponse response = template.postForObject(url + GAMESTATE_PATH + File.separator + column, null, EnterDiskResponse.class);
+    	
+    	LOG.info(response.toString());
+    	
+    	if (response.getMessage() == "OK") {
+            LOG.info("Enter Disk",response.getMessage());
+            return response.getMessage();
+        } else {
+        	
+        	LOG.info(response.getMessage());
+        	return response.getMessage();
+         }
+     }
 
     public List<String> getNames() {
-        return null;//TODO: implement me
+    	
+    	LOG.info("Get name of player");
+    	getNameResponse response = template.getForObject(url + PLAYER_NAME, null, getNameResponse.class);
+    	
+    	LOG.info(response.toString());
+        	
+    	 if (response.getPlayerName() == null) {
+             LOG.info(response.getPlayerName().toString());
+             return response.getPlayerName();
+         } else {
+             LOG.info("Player name is {} ", response.getPlayerName());
+             return response.getPlayerName();
+         }
+    	 
     }
 
     public int getLastTurn() {
-        return -1;//TODO: implement me
+        
+    	LOG.info("Get name last Turn");
+    	getLastTurnResponse response = template.getForObject(url + LAST_TURN, null, getLastTurnResponse.class);
+    	
+    	LOG.info(response.toString());
+    	
+    	if (response.getLastTurn() == null) {
+            LOG.info(response.getLastTurn().toString());
+            return response.getLastTurn();
+        } else {
+            LOG.info("Last Turn is {} ", response.getLastTurn());
+            return response.getLastTurn();
+        }
+    	           	
     }
 
 }
+
