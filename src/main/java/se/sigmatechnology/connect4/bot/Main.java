@@ -35,9 +35,9 @@ public class Main implements CommandLineRunner {
             return;
         }
         LOG.info("Application started");
-        LOG.info("{};{};{};{}", ai, cmd, gameClient, board);
-
-        if (gameClient.connect("BOT")) {
+        String name = getName();
+        LOG.info("My name is {}", name);
+        if (gameClient.connect("name")) {
             LOG.info("Connection successful");
             State state = gameClient.getState();
             LOG.info("State: {}", state);
@@ -53,13 +53,21 @@ public class Main implements CommandLineRunner {
                 } else if (state == State.WAITING_FOR_PLAYER || state == State.OPPONENTS_TURN) {
                     LOG.info("Waiting...");
                     Thread.sleep(1000);
-                    continue;
                 }
                 state = gameClient.getState();
                 LOG.info("State: {}", state);
             }
         } else {
             LOG.error("Connection failed");
+        }
+    }
+
+    public String getName() {
+        String name = cmd.getOptionValue("name");
+        if (name == null || name.isEmpty()) {
+            return "BOT";
+        } else {
+            return name;
         }
     }
 }
