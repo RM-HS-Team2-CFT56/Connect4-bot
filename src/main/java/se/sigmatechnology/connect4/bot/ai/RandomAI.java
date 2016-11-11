@@ -28,7 +28,7 @@ public class RandomAI implements AI {
 
     private boolean checkColumn(Board board, int column) {
         for (int i = 0; i < 6; i++) {
-            if (board.getBoard()[column][i] == Board.type.EMPTY) {
+            if (board.getBoard()[column][i] == Board.Type.EMPTY) {
                 return true;
             }
         }

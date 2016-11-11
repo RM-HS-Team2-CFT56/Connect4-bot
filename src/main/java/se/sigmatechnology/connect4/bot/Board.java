@@ -4,7 +4,6 @@ package se.sigmatechnology.connect4.bot;
  * Created by msk and bek on 2016-11-08.
  */
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,19 +19,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class Board {
 
-    private type[][] board;
+    private Type[][] board;
 
     private int board_column = 7;
     private int board_row = 6;
 
     public Board() {
 
-        board = new type[board_column][board_row];
+        board = new Type[board_column][board_row];
 
         //Initialize all the entire board places with zero value.
         for (int y = 0; y < board_row; y++) {
             for (int x = 0; x < board_column; x++) {
-                board[x][y] = type.EMPTY;
+                board[x][y] = Type.EMPTY;
             }
         }
     }
@@ -41,12 +40,12 @@ public class Board {
         board_column = column;
         board_row = row;
 
-        board = new type[board_column][board_row];
+        board = new Type[board_column][board_row];
 
         //Initialize all the entire board places with zero value.
         for (int y = 0; y < board_row; y++) {
             for (int x = 0; x < board_column; x++) {
-                board[x][y] = type.EMPTY;
+                board[x][y] = Type.EMPTY;
             }
         }
     }
@@ -55,9 +54,9 @@ public class Board {
     public void putDisc(int column) {
 
         for (int y = 0; y < board_row; y++) {
-            if (board[column][y] == type.EMPTY) {
+            if (board[column][y] == Type.EMPTY) {
 
-                board[column][y] = type.BLUE;
+                board[column][y] = Type.BLUE;
                 break;
             }
 
@@ -68,9 +67,9 @@ public class Board {
     //Put opponent disc to specific column of board
     public void opponentsDisc(int column) {
         for (int y = 0; y < board_row; y++) {
-            if (board[column][y] == type.EMPTY) {
+            if (board[column][y] == Type.EMPTY) {
 
-                board[column][y] = type.RED;
+                board[column][y] = Type.RED;
                 break;
             }
 
@@ -87,13 +86,42 @@ public class Board {
         return board_row;
     }
 
-    public type[][] getBoard() {
+    public Type[][] getBoard() {
         return board;
     }
 
-
-    public enum type {
-        BLUE, RED, EMPTY
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('\n');
+        sb.append("\\ 1 2 3 4 5 6 7");
+        sb.append('\n');
+        for (int row = board_row - 1; row >= 0; row--) {
+            sb.append(board_row - row)
+                    .append(" ");
+            for (int column = 0; column < board_column; column++) {
+                sb.append(board[column][row].toString())
+                        .append(" ");
+            }
+            sb.append("\n");
+        }
+        sb.append('\n');
+        return sb.toString();
     }
 
+    public enum Type {
+
+        BLUE("B"), RED("R"), EMPTY("0");
+
+        String value;
+
+        Type(String val) {
+            value = val;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
 }

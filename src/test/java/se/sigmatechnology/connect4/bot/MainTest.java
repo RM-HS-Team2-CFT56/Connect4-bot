@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.sigmatechnology.connect4.bot.ai.RandomAI;
+import se.sigmatechnology.connect4.bot.ai.AI;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -28,7 +28,7 @@ public class MainTest {
     Board board = new Board();
 
     @Mock
-    RandomAI ai;
+    AI ai;
 
     @Mock
     CommandLine commandLine;
@@ -37,18 +37,46 @@ public class MainTest {
     Main main;
 
     @Test
-    public void testWorkflow() throws Exception {
+    public void testFirstPlayerWinWorkflow() throws Exception {
         when(client.connect(anyString())).thenReturn(true);
         when(client.getState()).thenReturn(WAITING_FOR_PLAYER,
                 YOUR_TURN, OPPONENTS_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
                 YOUR_TURN, OPPONENTS_TURN,
                 YOUR_TURN, WON);
         when(client.getLastTurn()).thenReturn(6);
         when(client.enterDisk(anyInt())).thenReturn("OK");
         when(ai.getNextTurn(any(Board.class))).thenReturn(1);
         main.run(new String[]{});
+    }
 
+    @Test
+    public void testFirstPlayerLostWorkflow() throws Exception {
+        when(client.connect(anyString())).thenReturn(true);
+        when(client.getState()).thenReturn(WAITING_FOR_PLAYER,
+                YOUR_TURN, OPPONENTS_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                LOST);
+        when(client.getLastTurn()).thenReturn(6);
+        when(client.enterDisk(anyInt())).thenReturn("OK");
+        when(ai.getNextTurn(any(Board.class))).thenReturn(1, 2, 1, 3);
+        main.run(new String[]{});
+    }
 
+    @Test
+    public void testSecondPlayerWorkflow() throws Exception {
+        when(client.connect(anyString())).thenReturn(true);
+        when(client.getState()).thenReturn(OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                LOST);
+        when(client.getLastTurn()).thenReturn(6);
+        when(client.enterDisk(anyInt())).thenReturn("OK");
+        when(ai.getNextTurn(any(Board.class))).thenReturn(1, 2, 1, 3);
+        main.run(new String[]{});
     }
 
 }

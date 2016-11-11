@@ -15,6 +15,7 @@ import se.sigmatechnology.connect4.bot.ai.AI;
 public class Main implements CommandLineRunner {
 
     private final static Logger LOG = LoggerFactory.getLogger(Main.class);
+    private final static int SECOND = 1000;
 
     @Autowired
     private AI ai;
@@ -25,6 +26,7 @@ public class Main implements CommandLineRunner {
 
     @Autowired
     private Board board;
+
 
     public static void main(String... args) throws Exception {
         SpringApplication.run(Main.class, args);
@@ -39,30 +41,64 @@ public class Main implements CommandLineRunner {
         LOG.info("My name is {}", name);
         if (gameClient.connect("name")) {
             LOG.info("Connection successful");
-            State state = gameClient.getState();
-            LOG.info("State: {}", state);
+            State state = waitUntilSecondPlayerConnected();
+            //TODO: get name
+            boolean checkLastTurn = false;
             while (state != State.WON && state != State.LOST) {
                 if (state == state.YOUR_TURN) {
-                    int opponentTurn = gameClient.getLastTurn();
-                    if (opponentTurn > 0) {
-                        board.opponentsDisc(opponentTurn);
+                    LOG.info("It's my turn");
+                    if (checkLastTurn) {
+                        updateBoardWithOpponentsDecision();
+                        checkLastTurn = false;
                     }
-                    int column = ai.getNextTurn(board);
-                    board.putDisc(column);
-                    gameClient.enterDisk(column);
-                } else if (state == State.WAITING_FOR_PLAYER || state == State.OPPONENTS_TURN) {
-                    LOG.info("Waiting...");
-                    Thread.sleep(1000);
+                    makeMineDecision();
+                    LOG.info("Board state {}", board.toString());
+                } else if (state == State.OPPONENTS_TURN) {
+                    checkLastTurn = true;
+                    LOG.info("Waiting for opponent...");
+                    Thread.sleep(SECOND);
                 }
                 state = gameClient.getState();
-                LOG.info("State: {}", state);
+                LOG.debug("State: {}", state);
             }
+            if (checkLastTurn) {
+                updateBoardWithOpponentsDecision();
+            }
+            LOG.info("Result: {}", state);
+            LOG.info("Final state {}", board.toString());
         } else {
             LOG.error("Connection failed");
         }
     }
 
-    public String getName() {
+    private State waitUntilSecondPlayerConnected() throws InterruptedException {
+        State state;
+        while ((state = gameClient.getState()) == State.WAITING_FOR_PLAYER) {
+            LOG.debug("State: {}", state);
+            LOG.info("Waiting for player 2...");
+            Thread.sleep(SECOND);
+
+        }
+        return state;
+    }
+
+    private void updateBoardWithOpponentsDecision() {
+        int opponentTurn = gameClient.getLastTurn();
+        if (opponentTurn > 0) {
+            board.opponentsDisc(opponentTurn);
+            LOG.info("Opponents choice {}", opponentTurn);
+        }
+    }
+
+    private void makeMineDecision() {
+        int column = ai.getNextTurn(board);
+        LOG.info("My Choice {}", column);
+        board.putDisc(column);
+        gameClient.enterDisk(column);
+    }
+
+
+    private String getName() {
         String name = cmd.getOptionValue("name");
         if (name == null || name.isEmpty()) {
             return "BOT";
