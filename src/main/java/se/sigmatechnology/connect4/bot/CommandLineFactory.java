@@ -24,13 +24,15 @@ public class CommandLineFactory {
         String[] args = System.getProperty("sun.java.command").split(" ");
         Options options = new Options();
         //Common options
+        options.addOption("help", "print this message");
+        options.addOption("name", true, "Name of the bot");
         options.addOption(
                 Option.builder("url")
                         .desc("URL of game server")
                         .hasArg()
                         .required()
                         .build());
-        options.addOption("help", "print this message");
+
 
         //AI options
         OptionGroup optionGroup = new OptionGroup();
