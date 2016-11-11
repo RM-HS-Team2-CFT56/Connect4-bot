@@ -4,30 +4,30 @@ package se.sigmatechnology.connect4.bot.model;
  * Created by msk on 2016-11-10.
  */
 public class ConnectResponse {
-    private Integer id;
-    private String message;
+    private Integer ID;
+    private String Message;
 
     public Integer getId() {
-        return id;
+        return ID;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer ID) {
+        this.ID = ID;
     }
 
     public String getMessage() {
-        return message;
+        return Message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String Message) {
+        this.Message = Message;
     }
 
     @Override
     public String toString() {
         return "ConnectResponse{" +
-                "id=" + id +
-                ", message='" + message + '\'' +
+                "ID=" + ID +
+                ", Message='" + Message + '\'' +
                 '}';
     }
 }

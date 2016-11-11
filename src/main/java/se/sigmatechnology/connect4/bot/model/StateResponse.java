@@ -3,18 +3,18 @@ import se.sigmatechnology.connect4.bot.State;
 
 public class StateResponse {
 	
-    private State state;
+    private State State;
    
     public State getState() {
-        return state;
+        return State;
     }
 
-    public void setMessage(State state) {
-        this.state = state;
+    public void setMessage(State State) {
+        this.State = State;
     }
 
     @Override
     public String toString() {
-    	 return "StateResponse{" + "state='" + state + "\'}" ;
+    	 return "StateResponse{" + "State='" + State + "\'}" ;
     }
 }
