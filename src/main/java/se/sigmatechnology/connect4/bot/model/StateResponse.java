@@ -15,6 +15,6 @@ public class StateResponse {
 
     @Override
     public String toString() {
-        return "StateResponse{" + "state=" + state + '}';
+    	 return "StateResponse{" + "state='" + state + "\'}" ;
     }
 }
