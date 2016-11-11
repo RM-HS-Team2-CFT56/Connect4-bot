@@ -52,10 +52,7 @@ public class GameClient {
     }
 
     public State getState() {
-
         LOG.info("Trying to get game state");
-
-//        RestTemplate template = new RestTemplate();
 
         StateResponse response = template.postForObject(url + GAMESTATE_PATH, null, StateResponse.class);
 
@@ -80,7 +77,7 @@ public class GameClient {
         LOG.info(response.toString());
 
         if (response.getMessage() == "OK") {
-            LOG.info("Enter Disk", response.getMessage());
+            LOG.info("Enter Disk", response.getMessage()); //FIXME missing {} in log
             return response.getMessage();
         } else {
 
@@ -92,7 +89,7 @@ public class GameClient {
     public String getName() {
 
         LOG.info("Get name of player");
-        getNameResponse response = template.getForObject(url + PLAYER_NAME, null, getNameResponse.class);
+        getNameResponse response = template.getForObject(url + PLAYER_NAME, null, getNameResponse.class); //FIXME Class name should be CamelCase
 
         LOG.info(response.toString());
 
@@ -109,7 +106,7 @@ public class GameClient {
     public int getLastTurn() {
 
         LOG.info("Get name last Turn");
-        getLastTurnResponse response = template.getForObject(url + LAST_TURN, null, getLastTurnResponse.class);
+        getLastTurnResponse response = template.getForObject(url + LAST_TURN, null, getLastTurnResponse.class);  //FIXME Class name should be CamelCase
 
         LOG.info(response.toString());
 

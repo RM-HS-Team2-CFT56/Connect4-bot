@@ -42,7 +42,7 @@ public class Main implements CommandLineRunner {
         if (gameClient.connect("name")) {
             LOG.info("Connection successful");
             State state = waitUntilSecondPlayerConnected();
-            //TODO: get name
+            getOpponentsName();
             boolean checkLastTurn = false;
             while (state != State.WON && state != State.LOST) {
                 if (state == state.YOUR_TURN) {
@@ -80,6 +80,11 @@ public class Main implements CommandLineRunner {
 
         }
         return state;
+    }
+
+    private void getOpponentsName() {
+        String opponentsName = gameClient.getName();
+        LOG.info("Opponent {}", opponentsName);
     }
 
     private void updateBoardWithOpponentsDecision() {
