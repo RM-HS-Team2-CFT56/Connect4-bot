@@ -23,7 +23,7 @@ public class GameClient {
     private static final String PLAYER_NAME = "/game/Player";
     private static final String LAST_TURN = "/game/Turn";
     private String url;
-    
+
     private RestTemplate template = new RestTemplate();
 
     @Autowired
@@ -41,7 +41,7 @@ public class GameClient {
 
         LOG.info(response.toString());
 
-        if (response.getId() == null) {
+        if (!response.getConnected()) {
             LOG.info(response.getMessage());
             return false;
         } else {
@@ -54,7 +54,7 @@ public class GameClient {
     public State getState() {
         LOG.info("Trying to get game state");
 
-        StateResponse response = template.postForObject(url + GAMESTATE_PATH, null, StateResponse.class);
+        StateResponse response = template.getForObject(url + GAMESTATE_PATH, null, StateResponse.class);
 
         LOG.info(response.toString());
 
@@ -77,7 +77,7 @@ public class GameClient {
         LOG.info(response.toString());
 
         if (response.getMessage() == "OK") {
-            LOG.info("Enter Disk {}", response.getMessage()); 
+            LOG.info("Enter Disk {}", response.getMessage());
             return response.getMessage();
         } else {
 
@@ -89,7 +89,7 @@ public class GameClient {
     public String getName() {
 
         LOG.info("Get name of player");
-        GetNameResponse response = template.getForObject(url + PLAYER_NAME, null, GetNameResponse.class); 
+        GetNameResponse response = template.getForObject(url + PLAYER_NAME, null, GetNameResponse.class);
 
         LOG.info(response.toString());
 
@@ -106,7 +106,7 @@ public class GameClient {
     public int getLastTurn() {
 
         LOG.info("Get name last Turn");
-        GetLastTurnResponse response = template.getForObject(url + LAST_TURN, null, GetLastTurnResponse.class);  
+        GetLastTurnResponse response = template.getForObject(url + LAST_TURN, null, GetLastTurnResponse.class);
         LOG.info(response.toString());
 
         if (response.getLastTurn() == null) {

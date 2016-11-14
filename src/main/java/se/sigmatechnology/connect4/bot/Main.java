@@ -3,6 +3,7 @@ package se.sigmatechnology.connect4.bot;
 import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,12 +24,13 @@ public class Main implements CommandLineRunner {
     private CommandLine cmd;
     @Autowired
     private GameClient gameClient;
-
     @Autowired
     private Board board;
 
 
     public static void main(String... args) throws Exception {
+        Logger root = LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+
         SpringApplication.run(Main.class, args);
     }
 
@@ -39,7 +41,7 @@ public class Main implements CommandLineRunner {
         LOG.info("Application started");
         String name = getName();
         LOG.info("My name is {}", name);
-        if (gameClient.connect("name")) {
+        if (gameClient.connect(name)) {
             LOG.info("Connection successful");
             State state = waitUntilSecondPlayerConnected();
             getOpponentsName();
