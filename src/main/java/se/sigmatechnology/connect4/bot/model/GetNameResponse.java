@@ -1,18 +1,18 @@
 package se.sigmatechnology.connect4.bot.model;
 
 public class GetNameResponse {
-	private String PlayerName;
+	private String playerName;
 
     public String getPlayerName() {
-        return PlayerName;
+        return playerName;
     }
 
     public void setPlayerName(String PlayerName) {
-        this.PlayerName = PlayerName;
+        this.playerName = PlayerName;
     }
 
     @Override
     public String toString() {
-        return "GetPlayerNameResponse{" + "PlayerName='" + PlayerName + "\'}" ;
+        return "GetPlayerNameResponse{" + "playerName='" + playerName + "\'}" ;
     }
 }

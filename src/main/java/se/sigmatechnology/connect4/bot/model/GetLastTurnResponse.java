@@ -3,20 +3,20 @@ package se.sigmatechnology.connect4.bot.model;
 
 public class GetLastTurnResponse {
 	
-	private Integer Column;
+	private Integer column;
 
     public Integer getLastTurn() {
-        return Column;
+        return column;
     }
 
     public void setLastTurn(int Column) {
-        this.Column = Column;
+        this.column = Column;
     }
 
     @Override
     public String toString() {
      
-    	return "GetLastTurnResponse{" + "Column='" + Column + "\'}" ;
+    	return "GetLastTurnResponse{" + "column='" + column + "\'}" ;
     }
 	
 }

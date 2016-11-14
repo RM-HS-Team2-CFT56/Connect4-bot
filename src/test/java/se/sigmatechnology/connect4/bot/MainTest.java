@@ -11,8 +11,7 @@ import se.sigmatechnology.connect4.bot.ai.AI;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static se.sigmatechnology.connect4.bot.State.*;
 
 /**

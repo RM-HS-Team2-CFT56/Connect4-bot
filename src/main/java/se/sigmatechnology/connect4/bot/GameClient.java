@@ -18,10 +18,11 @@ import java.util.Map;
 @Component
 public class GameClient {
     private final static Logger LOG = LoggerFactory.getLogger(GameClient.class);
-    private static final String CONNECT_PATH = "/connect2Server"; // FIXME: 2016-11-10 temporary path, should be "/connect"
-    private static final String GAMESTATE_PATH = "/game";
-    private static final String PLAYER_NAME = "/game/Player";
-    private static final String LAST_TURN = "/game/Turn";
+    private static final String CONNECT_PATH = "/Connect";
+    private static final String GAME_STATE_PATH = "/getState";
+    private static final String GET_NAME = "/GetName";
+    private static final String GET_LAST_TURN = "/GetLastTurn";
+    private static final String ENTER_DISK = "/enterDisc";
     private String url;
 
     private RestTemplate template = new RestTemplate();
@@ -35,7 +36,7 @@ public class GameClient {
         LOG.info("Trying to connect to game server {}", url);
 
         Map<String, String> request = new HashMap<String, String>();
-        request.put("PlayerName", name);
+        request.put("playerName", name);
 
         ConnectResponse response = template.postForObject(url + CONNECT_PATH, request, ConnectResponse.class);
 
@@ -54,17 +55,11 @@ public class GameClient {
     public State getState() {
         LOG.info("Trying to get game state");
 
-        StateResponse response = template.getForObject(url + GAMESTATE_PATH, null, StateResponse.class);
+        StateResponse response = template.getForObject(url + GAME_STATE_PATH, StateResponse.class);
 
-        LOG.info(response.toString());
+        LOG.info("{} - {}", response.getState(), response.getMessage());
 
-        if (response.getState() == null) {
-            LOG.info(response.getState().toString());
-            return response.getState();
-        } else {
-            LOG.info("Current game state {} ", response.getState());
-            return response.getState();
-        }
+        return State.WAITING_FOR_PLAYER;
 
 
     }
@@ -72,7 +67,7 @@ public class GameClient {
     public String enterDisk(int column) {
 
         LOG.info("Insert disk at colomn {}", column);
-        EnterDiskResponse response = template.postForObject(url + GAMESTATE_PATH + File.separator + column, null, EnterDiskResponse.class);
+        EnterDiskResponse response = template.postForObject(url + ENTER_DISK + File.separator + column, null, EnterDiskResponse.class);
 
         LOG.info(response.toString());
 
@@ -89,7 +84,7 @@ public class GameClient {
     public String getName() {
 
         LOG.info("Get name of player");
-        GetNameResponse response = template.getForObject(url + PLAYER_NAME, null, GetNameResponse.class);
+        GetNameResponse response = template.getForObject(url + GET_NAME, null, GetNameResponse.class);
 
         LOG.info(response.toString());
 
@@ -106,7 +101,7 @@ public class GameClient {
     public int getLastTurn() {
 
         LOG.info("Get name last Turn");
-        GetLastTurnResponse response = template.getForObject(url + LAST_TURN, null, GetLastTurnResponse.class);
+        GetLastTurnResponse response = template.getForObject(url + GET_LAST_TURN, null, GetLastTurnResponse.class);
         LOG.info(response.toString());
 
         if (response.getLastTurn() == null) {

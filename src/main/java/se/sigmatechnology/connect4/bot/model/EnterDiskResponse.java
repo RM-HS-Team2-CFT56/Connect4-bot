@@ -1,19 +1,19 @@
 package se.sigmatechnology.connect4.bot.model;
 public class EnterDiskResponse {
 
-    private String Message;
+    private String message;
 
     public String getMessage() {
-        return Message;
+        return message;
     }
 
     public void setMessage(String Message) {
-        this.Message = Message;
+        this.message = Message;
     }
 
     @Override
     public String toString() {
-        return "EnterDiskResponse{" + "Message='" + Message + "\'}" ;
+        return "EnterDiskResponse{" + "message='" + message + "\'}" ;
     }
 		
 }

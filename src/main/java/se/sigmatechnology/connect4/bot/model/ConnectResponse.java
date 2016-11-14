@@ -5,9 +5,18 @@ package se.sigmatechnology.connect4.bot.model;
  */
 public class ConnectResponse {
 
-    private Long ID;
+    private Long id;
     private Boolean connected;
     private String message;
+
+    @Override
+    public String toString() {
+        return "ConnectResponse{" +
+                "ID=" + id +
+                ", connected=" + connected +
+                ", message='" + message + '\'' +
+                '}';
+    }
 
     public Boolean getConnected() {
         return connected;
@@ -17,21 +26,13 @@ public class ConnectResponse {
         this.connected = connected;
     }
 
-    @Override
-    public String toString() {
-        return "ConnectResponse{" +
-                "id='" + +'\'' +
-                ", connected=" + connected +
-                ", message='" + message + '\'' +
-                '}';
-    }
 
     public Long getId() {
-        return ID;
+        return id;
     }
 
     public void setId(Long id) {
-        this.ID = id;
+        this.id = id;
     }
 
     public String getMessage() {
