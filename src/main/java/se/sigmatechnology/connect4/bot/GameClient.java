@@ -59,15 +59,19 @@ public class GameClient {
 
         LOG.info("{} - {}", response.getState(), response.getMessage());
 
-        return State.WAITING_FOR_PLAYER;
+        return response.getState();
 
 
     }
 
-    public String enterDisk(int column) {
+    public String enterDisk(Integer column) {
 
         LOG.info("Insert disk at colomn {}", column);
-        EnterDiskResponse response = template.postForObject(url + ENTER_DISK + File.separator + column, null, EnterDiskResponse.class);
+
+        Map<String, Object> request = new HashMap<>();
+        request.put("column", column);
+
+        EnterDiskResponse response = template.postForObject(url + ENTER_DISK + File.separator + column, request, EnterDiskResponse.class);
 
         LOG.info(response.toString());
 
@@ -84,7 +88,7 @@ public class GameClient {
     public String getName() {
 
         LOG.info("Get name of player");
-        GetNameResponse response = template.getForObject(url + GET_NAME, null, GetNameResponse.class);
+        GetNameResponse response = template.getForObject(url + GET_NAME, GetNameResponse.class);
 
         LOG.info(response.toString());
 
@@ -101,7 +105,7 @@ public class GameClient {
     public int getLastTurn() {
 
         LOG.info("Get name last Turn");
-        GetLastTurnResponse response = template.getForObject(url + GET_LAST_TURN, null, GetLastTurnResponse.class);
+        GetLastTurnResponse response = template.getForObject(url + GET_LAST_TURN, GetLastTurnResponse.class);
         LOG.info(response.toString());
 
         if (response.getLastTurn() == null) {
