@@ -35,7 +35,7 @@ public class GameClient {
         LOG.info("Trying to connect to game server {}", url);
 
         Map<String, String> request = new HashMap<String, String>();
-        request.put("name", name);
+        request.put("PlayerName", name);
 
         ConnectResponse response = template.postForObject(url + CONNECT_PATH, request, ConnectResponse.class);
 
