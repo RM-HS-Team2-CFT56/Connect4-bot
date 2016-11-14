@@ -3,7 +3,6 @@ package se.sigmatechnology.connect4.bot;
 import org.apache.commons.cli.CommandLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -95,6 +94,7 @@ public class Main implements CommandLineRunner {
             board.opponentsDisc(opponentTurn);
             LOG.info("Opponents choice {}", opponentTurn);
         }
+
     }
 
     private void makeMineDecision() {

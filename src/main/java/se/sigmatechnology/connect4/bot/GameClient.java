@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import se.sigmatechnology.connect4.bot.model.*;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +70,7 @@ public class GameClient {
         Map<String, Object> request = new HashMap<>();
         request.put("column", column);
 
-        EnterDiskResponse response = template.postForObject(url + ENTER_DISK + File.separator + column, request, EnterDiskResponse.class);
+        EnterDiskResponse response = template.postForObject(url + ENTER_DISK, request, EnterDiskResponse.class);
 
         LOG.info(response.toString());
 
@@ -93,7 +92,7 @@ public class GameClient {
         LOG.info(response.toString());
 
         if (response.getPlayerName() == null) {
-            LOG.info(response.getPlayerName().toString());
+            LOG.info(response.getPlayerName());
             return response.getPlayerName();
         } else {
             LOG.info("Player name is {} ", response.getPlayerName());
@@ -103,17 +102,16 @@ public class GameClient {
     }
 
     public int getLastTurn() {
-
-        LOG.info("Get name last Turn");
+        LOG.info("Get last Turn");
         GetLastTurnResponse response = template.getForObject(url + GET_LAST_TURN, GetLastTurnResponse.class);
         LOG.info(response.toString());
 
-        if (response.getLastTurn() == null) {
-            LOG.info(response.getLastTurn().toString());
-            return response.getLastTurn();
+        if (response.getColumn() == null) {
+            LOG.info("Last turns column: {}", response.getColumn());
+            return -1;
         } else {
-            LOG.info("Last Turn is {} ", response.getLastTurn());
-            return response.getLastTurn();
+            LOG.info("Last turns column: {}", response.getColumn());
+            return response.getColumn();
         }
 
     }
