@@ -89,6 +89,9 @@ public class Board {
     public Type[][] getBoard() {
         return board;
     }
+    public void setBoard(Type[][] newBoard) {
+        board = newBoard;
+    }
 
     @Override
     public String toString() {

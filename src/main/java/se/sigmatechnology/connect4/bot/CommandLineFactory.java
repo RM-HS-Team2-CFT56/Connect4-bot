@@ -44,6 +44,10 @@ public class CommandLineFactory {
                 Option.builder("sequentialFillAI")
                         .desc("AI that sequentially fills every column from 1st to 7th, and then starts from begining")
                         .build());
+        optionGroup.addOption(
+                Option.builder("intelligentAI")
+                        .desc("An AI that might actually try to win")
+                        .build());
         options.addOptionGroup(optionGroup);
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;

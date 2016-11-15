@@ -21,6 +21,8 @@ public class AIFactory {
             return new RandomAI();
         } else if (commandLine.hasOption("sequentialFillAI")) {
             return new SequentialFillAI();
+        } else if (commandLine.hasOption("intelligentAI")) {
+            return new IntelligentAI();
         }
         return new RandomAI();//defaultAI
     }
