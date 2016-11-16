@@ -18,10 +18,10 @@ public class IntelligentAI implements AI {
 	
 	private void initAI(Board board) {
 		initAI = false;
-		scores = new ColumnScore(board.GetColumn());
+		scores = new ColumnScore(board.getColumn());
 		playfield = board.getBoard();
-		nrOfColumns = board.GetColumn();
-		nrOfRows = board.GetRow();
+		nrOfColumns = board.getColumn();
+		nrOfRows = board.getRow();
 	}
 	
 	private int startAI(Board board) {

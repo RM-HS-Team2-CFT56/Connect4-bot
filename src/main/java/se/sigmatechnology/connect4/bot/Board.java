@@ -78,11 +78,11 @@ public class Board {
     }
 
     //Getters
-    public int GetColumn() {
+    public int getColumn() {
         return board_column;
     }
 
-    public int GetRow() {
+    public int getRow() {
         return board_row;
     }
 

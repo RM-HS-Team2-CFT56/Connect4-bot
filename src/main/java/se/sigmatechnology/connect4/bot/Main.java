@@ -38,6 +38,8 @@ public class Main implements CommandLineRunner {
             return;
         }
         LOG.info("Application started");
+        LOG.info("Using AI {}", ai);
+
         String name = getName();
         LOG.info("My name is {}", name);
         if (gameClient.connect(name)) {
