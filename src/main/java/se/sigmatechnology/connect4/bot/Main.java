@@ -45,7 +45,7 @@ public class Main implements CommandLineRunner {
             State state = waitUntilSecondPlayerConnected();
             getOpponentsName();
             boolean checkLastTurn = false;
-            while (state != State.WON && state != State.LOST) {
+            while (state != State.WON && state != State.LOST && state != State.DRAW) {
                 if (state == state.YOUR_TURN) {
                     LOG.info("It's my turn");
                     if (checkLastTurn) {

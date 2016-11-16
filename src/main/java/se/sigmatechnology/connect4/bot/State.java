@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public enum State {
     @JsonProperty OPPONENTS_TURN,
     @JsonProperty YOUR_TURN,
-    @JsonProperty("WAITING_FOR_PLAYER") WAITING_FOR_PLAYER,
+    @JsonProperty WAITING_FOR_PLAYER,
     @JsonProperty WON,
-    @JsonProperty LOST
+    @JsonProperty LOST,
+    @JsonProperty DRAW
 }
