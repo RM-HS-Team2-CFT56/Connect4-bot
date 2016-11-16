@@ -51,8 +51,8 @@ public class IntelligentAI implements AI {
 	}
 	
 	private int lookForMove() {
-		for(int y = 0; y < nrOfRows; y++) {
-			for(int i = 0; i < nrOfColumns; i++) {
+		for(int y = 0; y < nrOfColumns; y++) {
+			for(int i = 0; i < nrOfRows; i++) {
 				if(playfield[y][i] == Board.Type.EMPTY) {
 					int score = 0;
 					// Up
@@ -68,13 +68,13 @@ public class IntelligentAI implements AI {
 						}
 					}
 					// Down
-					if(i != nrOfColumns) {
+					if(i != nrOfRows-1) {
 						if(playfield[y][i+1] == Board.Type.BLUE) {
 							score++;
 						}
 					}
 					// Right
-					if(y != nrOfRows) {
+					if(y != nrOfColumns-1) {
 						if(playfield[y+1][i] == Board.Type.BLUE) {
 							score++;
 						}
@@ -86,37 +86,31 @@ public class IntelligentAI implements AI {
 						}
 					}
 					// Diagonal Up & Right
-					if(y != nrOfRows && i != 0) {
+					if(y != nrOfColumns-1 && i != 0) {
 						if(playfield[y+1][i-1] == Board.Type.BLUE) {
 							score++;
 						}
 					}
 					// Diagonal Down & Right
-					if(y != nrOfRows && i != nrOfColumns) {
+					if(y != nrOfColumns-1 && i != nrOfRows-1) {
 						if(playfield[y+1][i+1] == Board.Type.BLUE) {
 							score++;
 						}
 					}
 					// Diagonal Down & Left
-					if(y != 0 && i != nrOfColumns) {
+					if(y != 0 && i != nrOfRows-1) {
 						if(playfield[y-1][i+1] == Board.Type.BLUE) {
 							score++;
 						}
 					}
 					
 					scores.addScore(y, score);
-					i = nrOfColumns;
+					i = nrOfRows;
 				}
 			}
 		}
-		int columnToReturn = -1;
-		for(int i = 0; i < nrOfColumns; i++) {
-			if(scores.getScore(i) > columnToReturn) {
-				columnToReturn = scores.getScore(i);
-			}
-		}
 		
-		return columnToReturn;
+		return scores.getColumnWithBestScore();
 	}
 	
 	private int checkWinningMoves() {

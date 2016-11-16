@@ -38,4 +38,14 @@ public class AITest {
 		
 		assertEquals(ai.getNextTurn(board), 0);
 	}
+	
+	@Test
+	public void IntelligentFullMoveTest() throws Exception {
+		AI ai = new IntelligentAI();
+		Board board = new Board(6, 7);
+		
+		for(int i = 0; i < 42; i++) {
+			board.putDisc(ai.getNextTurn(board));
+		}
+	}
 }
