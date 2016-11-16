@@ -93,10 +93,8 @@ public class Main implements CommandLineRunner {
 
     private void updateBoardWithOpponentsDecision() {
         int opponentTurn = gameClient.getLastTurn();
-        if (opponentTurn > 0) {
-            board.opponentsDisc(opponentTurn);
-            LOG.info("Opponents choice {}", opponentTurn);
-        }
+        board.opponentsDisc(opponentTurn);
+        LOG.info("Opponents choice {}", opponentTurn);
 
     }
 

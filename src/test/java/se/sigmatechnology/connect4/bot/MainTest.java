@@ -78,4 +78,18 @@ public class MainTest {
         main.run(new String[]{});
     }
 
+    @Test
+    public void testSecondPlayerZeroColumnWorkflow() throws Exception {
+        when(client.connect(anyString())).thenReturn(true);
+        when(client.getState()).thenReturn(OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                YOUR_TURN, OPPONENTS_TURN,
+                LOST);
+        when(client.getLastTurn()).thenReturn(0);
+        when(client.enterDisk(anyInt())).thenReturn("OK");
+        when(ai.getNextTurn(any(Board.class))).thenReturn(1, 2, 1, 3);
+        main.run(new String[]{});
+    }
+
 }
