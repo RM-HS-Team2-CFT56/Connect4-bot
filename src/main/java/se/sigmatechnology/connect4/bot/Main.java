@@ -43,10 +43,10 @@ public class Main implements CommandLineRunner {
         String name = getName();
         LOG.info("My name is {}", name);
         if (gameClient.connect(name)) {
+            boolean checkLastTurn = false;
             LOG.info("Connection successful");
             State state = waitUntilSecondPlayerConnected();
             getOpponentsName();
-            boolean checkLastTurn = false;
             while (state != State.WON && state != State.LOST && state != State.DRAW) {
                 if (state == state.YOUR_TURN) {
                     LOG.info("It's my turn");
@@ -55,6 +55,7 @@ public class Main implements CommandLineRunner {
                         checkLastTurn = false;
                     }
                     makeMineDecision();
+                    checkLastTurn = true;
                     LOG.info("Board state {}", board.toString());
                 } else if (state == State.OPPONENTS_TURN) {
                     checkLastTurn = true;

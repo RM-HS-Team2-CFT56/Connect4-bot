@@ -2,7 +2,7 @@ package se.sigmatechnology.connect4.bot.ai;
 
 import se.sigmatechnology.connect4.bot.Board;
 
-public class IntelligentAI implements AI {
+public class IntelligentAI extends AI {
 	ColumnScore scores;
 	Board.Type[][] playfield;
 	int nrOfColumns;

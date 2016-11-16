@@ -23,6 +23,8 @@ public class AIFactory {
             return new SequentialFillAI();
         } else if (commandLine.hasOption("intelligentAI")) {
             return new IntelligentAI();
+        } else if (commandLine.hasOption("columnFillAI")) {
+            return new ColumnFillAI();
         }
         return new RandomAI();//defaultAI
     }

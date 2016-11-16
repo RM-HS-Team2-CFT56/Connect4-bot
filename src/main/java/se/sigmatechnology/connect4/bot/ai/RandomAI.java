@@ -5,7 +5,7 @@ import se.sigmatechnology.connect4.bot.Board;
 /**
  * Created by msk on 2016-11-08.
  */
-public class RandomAI implements AI {
+public class RandomAI extends AI {
 
     public int getNextTurn(Board board) {
         return randomSolution(board);
@@ -26,12 +26,5 @@ public class RandomAI implements AI {
         return test;
     }
 
-    private boolean checkColumn(Board board, int column) {
-        for (int i = 0; i < 6; i++) {
-            if (board.getBoard()[column][i] == Board.Type.EMPTY) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
