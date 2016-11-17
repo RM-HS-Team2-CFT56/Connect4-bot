@@ -50,12 +50,9 @@ public class Main implements CommandLineRunner {
             while (state != State.WON && state != State.LOST && state != State.DRAW) {
                 if (state == state.YOUR_TURN) {
                     LOG.info("It's my turn");
-                    if (checkLastTurn) {
-                        updateBoardWithOpponentsDecision();
-                        checkLastTurn = false;
-                    }
+                    updateBoardWithOpponentsDecision();
+                    checkLastTurn = false;
                     makeMineDecision();
-                    checkLastTurn = true;
                     LOG.info("Board state {}", board.toString());
                 } else if (state == State.OPPONENTS_TURN) {
                     checkLastTurn = true;
