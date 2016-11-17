@@ -90,9 +90,12 @@ public class Main implements CommandLineRunner {
 
     private void updateBoardWithOpponentsDecision() {
         int opponentTurn = gameClient.getLastTurn();
-        board.opponentsDisc(opponentTurn);
-        LOG.info("Opponents choice {}", opponentTurn);
-
+        if (opponentTurn < 0) {
+            LOG.info("It's first turn");
+        } else {
+            LOG.info("Opponents choice {}", opponentTurn);
+            board.opponentsDisc(opponentTurn);
+        }
     }
 
     private void makeMineDecision() {
